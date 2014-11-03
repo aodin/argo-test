@@ -1,5 +1,25 @@
 module.exports = function(grunt) {
   grunt.initConfig({
+    copy: {
+      main: {
+        files: [
+          {
+            expand: true,
+            flatten: true,
+            src: [
+              './bower_components/angular/**.min.js',
+              './bower_components/angular/**.min.js.map',
+              './bower_components/angular-resource/**.min.js',
+              './bower_components/angular-resource/**.min.js.map',
+              './bower_components/angular-route/**.min.js',
+              './bower_components/angular-route/**.min.js.map'
+            ],
+            dest: './static/js/',
+            filter: 'isFile',
+          }
+        ]
+      }
+    },
     less: {
       development: {
         options: {
@@ -21,9 +41,6 @@ module.exports = function(grunt) {
         },
         files: {}
       },
-      copy: {
-        files: {}
-      }
     },
     watch: {
       less: {
@@ -36,10 +53,11 @@ module.exports = function(grunt) {
       },
     },
   });
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.registerTask('build', ['less', 'uglify']);
+  grunt.registerTask('build', ['copy', 'less', 'uglify']);
   grunt.registerTask('heroku', 'build');
   grunt.registerTask('heroku:', 'build');
   grunt.registerTask('heroku:development', 'build');
