@@ -1,12 +1,12 @@
-{{ define "hello" }}<!DOCTYPE html>
+<% define "hello" %><!DOCTYPE html>
 <html lang="en">
 <head>
-  {{ template "partials/head" . }}
+  <% template "partials/head" . %>
 </head>
 <body>
   <div class="container">
-    <h1>Hello, {{ .Name }}!</h1>
+    <h1>Hello, <% .Name %>!</h1>
   </div>
-  {{ template "partials/scripts" . }}
+  <% template "partials/scripts" . %>
 </body>
-</html>{{ end }}
+</html><% end %>

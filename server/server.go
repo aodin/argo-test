@@ -35,7 +35,7 @@ func New(c config.Config, db sql.Connection) *App {
 	app := &App{
 		config:    c,
 		db:        db,
-		templates: templates.New(c.TemplateDir, locals),
+		templates: templates.NewWithDelims(c.TemplateDir, `<%`, `%>`, locals),
 		router:    httprouter.New(),
 	}
 
