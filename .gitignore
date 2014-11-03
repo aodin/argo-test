@@ -6,6 +6,7 @@
 # Folders
 _obj
 _test
+gin-bin
 
 # Architecture specific extensions/prefixes
 *.[568vq]
@@ -22,3 +23,14 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# NPM and Bower packages
+node_modules/
+bower_components/
+
+# Compiled files
+static/js
+static/css
+
+# Local settings
+/settings.json

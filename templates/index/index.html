@@ -1,0 +1,12 @@
+{{ define "index" }}<!DOCTYPE html>
+<html lang="en">
+<head>
+  {{ template "partials/head" . }}
+</head>
+<body>
+  <div class="container">
+    <h1><a href="/hello/angular">Say Hello!</a></h1>
+  </div>
+  {{ template "partials/scripts" . }}
+</body>
+</html>{{ end }}

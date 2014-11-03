@@ -1,0 +1,24 @@
+{
+    "domain": "localhost",
+    "port": 3030,
+    "templates": "./templates",
+    "static": "./static",
+    "static_url": "/static/",
+    "smtp": {
+        "port": 587,
+        "user": "user",
+        "password": "password",
+        "host": "example.com",
+        "from": "no_reply@example.com",
+        "alias": "Example User"
+    },
+    "database": {
+        "driver": "postgres",
+        "host": "localhost",
+        "port": 5432,
+        "name": "db",
+        "user": "",
+        "password": "",
+        "ssl_mode": "disable"
+    }
+}
