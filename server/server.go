@@ -3,7 +3,6 @@ package server
 import (
 	"log"
 	"net/http"
-	"path"
 
 	"github.com/aodin/argo"
 	sql "github.com/aodin/aspect"
@@ -30,35 +29,53 @@ func (app *App) ListenAndServe() error {
 	return http.ListenAndServe(app.config.Address(), app.router)
 }
 
-func New(c config.Config, db sql.Connection) *App {
+func New(c config.Config, conn sql.Connection) *App {
 	// Parse templates with the static URL as a local template variable
 	locals := templates.Attrs{"StaticURL": c.StaticURL}
 
 	app := &App{
 		config:    c,
-		db:        db,
+		db:        conn,
 		templates: templates.NewWithDelims(c.TemplateDir, `<%`, `%>`, locals),
 		router:    httprouter.New(),
 	}
 
-	// Static files
-	app.router.ServeFiles(
-		path.Join(c.StaticURL, "*filepath"),
-		http.Dir(c.StaticDir),
+	// Just an API for now
+	api := argo.New()
+	api.Add(
+		"companies",
+		argo.NewJSONResource(conn, db.Companies),
+		db.Companies.PrimaryKey()...,
 	)
 
-	// API
-	api := argo.New()
-	api.Add("companies", argo.NewTableResource(db.Companies))
-	app.router.GET("/api/*resources", api)
-	app.router.PUT("/api/*resources", api)
-	app.router.POST("/api/*resources", api)
-	app.router.PATCH("/api/*resources", api)
-	app.router.DELETE("/api/*resources", api)
+	api.Add(
+		"industries",
+		argo.NewJSONResource(conn, db.Industries),
+		db.Industries.PrimaryKey()...,
+	)
+
+	api.Add(
+		"company-industries",
+		argo.NewJSONResource(conn, db.CompanyIndustries),
+		db.CompanyIndustries.PrimaryKey()...,
+	)
+
+	// Attach the api
+	app.router.Handler("GET", "/*api", api)
+	app.router.Handler("POST", "/*api", api)
+	app.router.Handler("PATCH", "/*api", api)
+	app.router.Handler("PUT", "/*api", api)
+	app.router.Handler("DELETE", "/*api", api)
+
+	// Static files
+	// app.router.ServeFiles(
+	// 	path.Join(c.StaticURL, "*filepath"),
+	// 	http.Dir(c.StaticDir),
+	// )
 
 	// Default routes
-	app.router.GET("/", app.Index)
-	app.router.GET("/hello/:name", app.Hello)
+	// app.router.GET("/", app.Index)
+	// app.router.GET("/hello/:name", app.Hello)
 
 	return app
 }
