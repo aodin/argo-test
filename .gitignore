@@ -34,3 +34,4 @@ static/css
 
 # Local settings
 /settings.json
+/db/dbconf.yml
