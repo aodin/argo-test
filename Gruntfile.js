@@ -18,35 +18,33 @@ module.exports = function(grunt) {
     less: {
       development: {
         options: {
-          paths: ["./less"],
           compress: true,
           reload: true
         },
         files: {
-          "./static/css/main.css": "./templates/main.less"
+          './static/css/main.css': './templates/main.less'
         }
       }
     },
     uglify: {
       development: {
         options: {
-          paths: ["./javascript"],
           compress: true,
           reload: true
         },
         files: {
-          "./static/js/app.js": "./src/**/*.js"
+          './static/js/app.js': './src/**/*.js'
         }
       },
     },
     watch: {
       less: {
-        files: ["./templates/**/*.less"],
+        files: ['./templates/**/*.less'],
         tasks: ["less"]
       },
       uglify: {
-        files: ["./src/js/**/*.js"],
-        tasks: ["uglify"]                
+        files: ['./src/js/**/*.js'],
+        tasks: ['uglify']                
       },
     },
   });
