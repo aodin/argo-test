@@ -3,6 +3,7 @@ package server
 import (
 	"log"
 	"net/http"
+	"path"
 
 	"github.com/aodin/argo"
 	sql "github.com/aodin/aspect"
@@ -41,7 +42,7 @@ func New(c config.Config, conn sql.Connection) *App {
 	}
 
 	// Just an API for now
-	api := argo.New()
+	api := argo.New().SetPrefix("/api/")
 	api.Add(
 		"companies",
 		argo.NewJSONResource(conn, db.Companies),
@@ -61,21 +62,21 @@ func New(c config.Config, conn sql.Connection) *App {
 	)
 
 	// Attach the api
-	app.router.Handler("GET", "/*api", api)
-	app.router.Handler("POST", "/*api", api)
-	app.router.Handler("PATCH", "/*api", api)
-	app.router.Handler("PUT", "/*api", api)
-	app.router.Handler("DELETE", "/*api", api)
+	app.router.Handler("GET", "/api/*api", api)
+	app.router.Handler("POST", "/api/*api", api)
+	app.router.Handler("PATCH", "/api/*api", api)
+	app.router.Handler("PUT", "/api/*api", api)
+	app.router.Handler("DELETE", "/api/*api", api)
 
 	// Static files
-	// app.router.ServeFiles(
-	// 	path.Join(c.StaticURL, "*filepath"),
-	// 	http.Dir(c.StaticDir),
-	// )
+	app.router.ServeFiles(
+		path.Join(c.StaticURL, "*filepath"),
+		http.Dir(c.StaticDir),
+	)
 
 	// Default routes
-	// app.router.GET("/", app.Index)
-	// app.router.GET("/hello/:name", app.Hello)
+	app.router.GET("/", app.Index)
+	app.router.GET("/hello/:name", app.Hello)
 
 	return app
 }
