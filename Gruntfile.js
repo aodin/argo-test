@@ -7,12 +7,7 @@ module.exports = function(grunt) {
             expand: true,
             flatten: true,
             src: [
-              './bower_components/angular/**.min.js',
-              './bower_components/angular/**.min.js.map',
-              './bower_components/angular-resource/**.min.js',
-              './bower_components/angular-resource/**.min.js.map',
-              './bower_components/angular-route/**.min.js',
-              './bower_components/angular-route/**.min.js.map'
+              './bower_components/angular*/**.min.js{.map,}'
             ],
             dest: './static/js/',
             filter: 'isFile',
@@ -39,7 +34,9 @@ module.exports = function(grunt) {
           compress: true,
           reload: true
         },
-        files: {}
+        files: {
+          "./static/js/app.js": "./src/**/*.js"
+        }
       },
     },
     watch: {
