@@ -11,6 +11,10 @@ func (app *App) Index(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	app.Execute(w, "index")
 }
 
+func (app *App) Detail(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	app.Execute(w, "detail", templates.Attrs{"ID": ps.ByName("id")})
+}
+
 func (app *App) Hello(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	name := ps.ByName("name")
 	app.Execute(w, "hello", templates.Attrs{"Name": name})

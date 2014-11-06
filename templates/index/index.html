@@ -4,12 +4,14 @@
   <% template "partials/head" . %>
   <script src="<% .StaticURL %>js/angular.min.js"></script>
   <script src="<% .StaticURL %>js/angular-resource.min.js"></script>
+  <script src="<% .StaticURL %>js/angular-route.min.js"></script>
 </head>
 <body ng-controller="IndustryListCtrl">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
         <h1>Industries <small>({{industries.length}})</small></h1>
+        <p>Company Industries</p>
         Search: <input class="form-control" ng-model="query">
         <select ng-model="orderProp">
           <option value="name">Alphabetical</option>
@@ -17,7 +19,7 @@
         </select>
         <ul>
           <li ng-repeat="industry in industries | filter:query | orderBy:orderProp">
-            <h3>{{industry.name}}</h3>
+            <h4>{{industry.name}}</h4>
             <p>{{industry.about}}</p>
           </li>
         </ul>

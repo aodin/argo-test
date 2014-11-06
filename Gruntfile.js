@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     copy: {
-      main: {
+      development: {
         files: [
           {
             expand: true,
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
               './bower_components/angular*/**.min.js{.map,}'
             ],
             dest: './static/js/',
-            filter: 'isFile',
+            filter: 'isFile'
           }
         ]
       }
@@ -32,9 +32,14 @@ module.exports = function(grunt) {
           compress: true,
           reload: true
         },
-        files: {
-          './static/js/app.js': './src/**/*.js'
-        }
+        files: [
+          {
+            src: [
+              './src/js/**/*.js',
+            ],
+            dest: './static/js/app.js'
+          }
+        ]
       },
     },
     watch: {
