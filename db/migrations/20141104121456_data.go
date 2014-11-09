@@ -64,7 +64,7 @@ func Up_20141104121456(txn *dbsql.Tx) {
 
 	seqStmt = postgres.AlterSequence(
 		postgres.Sequence("industries_id_seq"),
-	).RestartWith(len(companies) + 1)
+	).RestartWith(len(industries) + 1)
 	if _, err := conn.Execute(seqStmt); err != nil {
 		panic(err)
 	}

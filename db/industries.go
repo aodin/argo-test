@@ -13,11 +13,12 @@ type Industry struct {
 
 var Industries = sql.Table("industries",
 	sql.Column("id", postgres.Serial{NotNull: true}),
-	sql.Column("name", sql.String{Unique: true}),
-	sql.Column("about", sql.String{}),
+	sql.Column("name", sql.String{NotNull: true}),
+	sql.Column("about", sql.String{NotNull: true}),
 	sql.Column(
 		"created_at",
 		sql.Timestamp{Default: "now() at time zone 'utc'"},
 	),
 	sql.PrimaryKey("id"),
+	sql.Unique("name"),
 )

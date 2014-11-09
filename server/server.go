@@ -44,29 +44,20 @@ func New(c config.Config, conn sql.Connection) *App {
 	// Just an API for now
 	api := argo.New().SetPrefix("/api/")
 
-	// TODO automatic FK matching?
 	companies := argo.Resource(
 		conn,
-		argo.Table(db.Companies),
-		argo.Include(
-			"contacts",
-			db.CompanyContacts,
-			"id",
-			"company_id",
-		).AsMap("key", "value"),
+		argo.FromTable(db.Companies),
+		argo.Many("contacts", db.CompanyContacts).AsMap("key", "value"),
 	)
-
 	api.Add(companies)
-	api.Add(argo.Resource(conn, argo.Table(db.Industries)))
-
-	// Dash case!
-	ci := argo.Resource(conn, argo.Table(db.CompanyIndustries))
-	ci.Name = "company-industries"
-	api.Add(ci)
-
-	cc := argo.Resource(conn, argo.Table(db.CompanyContacts))
-	cc.Name = "company-contacts"
-	api.Add(cc)
+	api.Add(argo.Resource(conn, argo.FromTable(db.Industries)))
+	api.Add(argo.Resource(conn, argo.FromTable(db.CompanyContacts).Slugify()))
+	api.Add(argo.Resource(conn, argo.FromTable(db.CompanyIndustries).Slugify()))
+	users := argo.Resource(
+		conn,
+		argo.FromTable(db.Users).Exclude("password"),
+	)
+	api.Add(users)
 
 	// Attach the api
 	app.router.Handler("GET", "/api/*api", api)

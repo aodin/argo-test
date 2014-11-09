@@ -9,7 +9,6 @@ import (
 	db "github.com/aodin/argo-test/db"
 )
 
-// Up is executed when this migration is applied
 func Up_20141107092004(txn *dbsql.Tx) {
 	conn := sql.WrapTx(txn, sql.MustGetDialect("postgres"))
 
@@ -34,11 +33,13 @@ func Up_20141107092004(txn *dbsql.Tx) {
 	}
 }
 
-// Down is executed when this migration is rolled back
 func Down_20141107092004(txn *dbsql.Tx) {
 	conn := sql.WrapTx(txn, sql.MustGetDialect("postgres"))
 
 	if _, err := conn.Execute(db.CompanyContacts.Delete()); err != nil {
+		panic(err)
+	}
+	if _, err := conn.Execute(db.CompanyContacts.Drop().IfExists()); err != nil {
 		panic(err)
 	}
 }
