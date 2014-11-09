@@ -11,6 +11,14 @@ func (app *App) Index(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	app.Execute(w, "index")
 }
 
+func (app *App) Companies(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	app.Execute(w, "companies")
+}
+
+func (app *App) Industries(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	app.Execute(w, "industries")
+}
+
 func (app *App) Detail(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	app.Execute(w, "detail", templates.Attrs{"ID": ps.ByName("id")})
 }

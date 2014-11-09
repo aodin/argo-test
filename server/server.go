@@ -74,7 +74,8 @@ func New(c config.Config, conn sql.Connection) *App {
 
 	// Default routes
 	app.router.GET("/", app.Index)
-	app.router.GET("/industries/:id", app.Detail)
+	app.router.GET("/companies", app.Companies)
+	app.router.GET("/industries", app.Industries)
 	app.router.GET("/hello/:name", app.Hello)
 
 	return app

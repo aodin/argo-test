@@ -6,23 +6,12 @@
   <script src="<% .StaticURL %>js/angular-resource.min.js"></script>
   <script src="<% .StaticURL %>js/angular-route.min.js"></script>
 </head>
-<body ng-controller="IndustryListCtrl">
+<body>
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <h1>Industries <small>({{industries.length}})</small></h1>
-        <p>Company Industries</p>
-        Search: <input class="form-control" ng-model="query">
-        <select ng-model="orderProp">
-          <option value="name">Alphabetical</option>
-          <option value="-id">Newest</option>
-        </select>
-        <ul>
-          <li ng-repeat="industry in industries | filter:query | orderBy:orderProp">
-            <h4>{{industry.name}}</h4>
-            <p>{{industry.about}}</p>
-          </li>
-        </ul>
+        <h2><a href="/companies">Companies</a></h2>
+        <h2><a href="/industries">Industries</a></h2>
       </div>
     </div>
   </div>

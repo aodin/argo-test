@@ -1,5 +1,6 @@
 var argoApp = angular.module('argoApp', [
   'ngRoute',
+  'companyControllers',
   'industryControllers'
 ]);
 
