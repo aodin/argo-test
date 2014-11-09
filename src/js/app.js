@@ -1,7 +1,8 @@
 var argoApp = angular.module('argoApp', [
   'ngRoute',
   'companyControllers',
-  'industryControllers'
+  'industryControllers',
+  'companyServices'
 ]);
 
 argoApp.config(['$routeProvider',

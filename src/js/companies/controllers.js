@@ -1,25 +1,20 @@
 var companyControllers = angular.module('companyControllers', []);
 
-function CompanyListCtrl($scope, $http) {
-  $http.get('/api/companies').success(function(data) {
-    $scope.companies = data.results;
-  });
+function CompanyListCtrl($scope, Company) {
+  $scope.companies = Company.query({}, function(companies) {});
   $scope.orderProp = 'name';
 }
 
 // Use the $inject property to prevent minification and munging from
 // breaking the dependency injection
-CompanyListCtrl.$inject = ['$scope', '$http'];
+CompanyListCtrl.$inject = ['$scope', 'Company'];
 companyControllers.controller('CompanyListCtrl', CompanyListCtrl);
 
-function CompanyDetailCtrl($scope, $routeParams, $http) {
-  $http.get('/api/companies/' + $routeParams.pk).success(function(data) {
-    console.log(data);
-    $scope.company = data;
-  });
+function CompanyDetailCtrl($scope, $routeParams, Company) {
+  $scope.company = Company.get({pk: $routeParams.pk}, function(phone) {});
 }
 
 // Use the $inject property to prevent minification and munging from
 // breaking the dependency injection
-CompanyDetailCtrl.$inject = ['$scope', '$routeParams', '$http'];
+CompanyDetailCtrl.$inject = ['$scope', '$routeParams', 'Company'];
 companyControllers.controller('CompanyDetailCtrl', CompanyDetailCtrl);
