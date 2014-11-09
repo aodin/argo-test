@@ -6,6 +6,14 @@ var argoApp = angular.module('argoApp', [
 
 argoApp.config(['$routeProvider',
   function($routeProvider) {
-    $routeProvider.when('/industries/:pk', {controller: 'IndustryDetailCtrl'})
+    $routeProvider.
+      when('/companies', {
+        templateUrl: '/static/partials/company-list.html',
+        controller: 'CompanyListCtrl'
+      }).
+      when('/companies/:pk', {
+        templateUrl: '/static/partials/company-detail.html',
+        controller: 'CompanyDetailCtrl'
+      });
   }
 ]);

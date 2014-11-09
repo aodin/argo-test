@@ -6,26 +6,11 @@
   <script src="<% .StaticURL %>js/angular-resource.min.js"></script>
   <script src="<% .StaticURL %>js/angular-route.min.js"></script>
 </head>
-<body ng-controller="CompanyListCtrl">
+<body>
   <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <h1>Companies <small>({{companies.length}})</small></h1>
-        Search: <input class="form-control" ng-model="query">
-        <select ng-model="orderProp">
-          <option value="name">Alphabetical</option>
-          <option value="-id">Newest</option>
-        </select>
-        <ul>
-          <li ng-repeat="company in companies | filter:query | orderBy:orderProp">
-            <h4>{{company.name}}</h4>
-            <p>{{company.created_at}}</p>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <div ng-view></div>
   </div>
-  <% template "partials/scripts" . %>
   <script src="<% .StaticURL %>js/app.js"></script>
+  <% template "partials/scripts" . %>
 </body>
 </html><% end %>
